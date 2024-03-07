@@ -9,9 +9,9 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
-      - ./data/dump:/dump
+      - mongo-data:/data/db
 
   app:
     build: .
@@ -19,8 +19,12 @@ services:
     restart: always
     container_name: back
     ports:
-      - '5000:5000'
+      - "5000:5000"
     depends_on:
       - db
     volumes:
       - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+    driver: local
